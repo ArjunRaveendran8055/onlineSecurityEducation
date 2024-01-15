@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductLoader from "../../Loader/ProductLoader";
 
 const CourseView = () => {
-
+  
   const {courses,isLoading}= useSelector(store=>store.course)
   console.log(courses,isLoading)
  const dispatch=useDispatch()
@@ -14,7 +14,7 @@ const CourseView = () => {
     },[])
   return (
     <>
-      <section className="bg-gray-2 pb-10 dark:bg-dark lg:pb-20 pt-4 lg:pt-4 flex justify-center items-center">
+      <section className="bg-gray-2 pb-10 dark:bg-dark lg:pb-20 flex justify-center items-center">
       {
         isLoading ? (
           <ProductLoader/>
@@ -22,7 +22,7 @@ const CourseView = () => {
         :
         (
           <div className="container flex justify-center items-center">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 p-4 lg:p-20">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 p-4">
           {
             courses.map((item,key)=>(
               <SingleCard

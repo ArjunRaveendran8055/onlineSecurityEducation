@@ -1,6 +1,6 @@
 import React from "react";
-import CourseShopStructure from "../components/BookShopStructure";
-const CourseShopPage = () => {
+import CourseShopStructure from "../components/CourseShopStructure";
+const CourseShopPage = ({open}) => {
   return (
     <div className="min-h-screen">
       <CourseShopStructure open={open} />

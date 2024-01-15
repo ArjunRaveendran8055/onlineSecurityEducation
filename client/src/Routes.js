@@ -6,5 +6,5 @@ export {
     ApplicationSecurityServices,
     LiveTrainingPage,
     BookShopPage,
-    
+    CourseShopPage
 }

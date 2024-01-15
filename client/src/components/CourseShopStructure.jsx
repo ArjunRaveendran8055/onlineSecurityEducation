@@ -1,9 +1,11 @@
 import { Fragment, useState } from "react";
+import CourseView from "./features/course/courseView";
+
 
 export default function CourseShopStructure({ open }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [viewSort, setViewSort] = useState(false);
-//   console.log("open is", open);
+ console.log("open is ",open)
   return (
     <div className="bg-white">
       <div>
@@ -592,7 +594,7 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
               {/* Product grid */}
               <div className="lg:col-span-3">
                 {/* Your content */}
-                
+                <CourseView/>
                 </div>
             </div>
           </section>
