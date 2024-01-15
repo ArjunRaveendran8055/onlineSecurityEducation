@@ -3,9 +3,9 @@ import CartView from "../features/cart/CartView";
 import { Link, Outlet } from "react-router-dom";
 import Footer from "./Footer";
 
-const NavBar = () => {
+const NavBar = ({open,setOpen}) => {
 
-  const [open, setOpen] = React.useState(false);
+  
   const [flyerCourse, setFlyerCourse] = React.useState(false);
   const [flyerService, setFlyerService] = React.useState(false);
   const [flyerResources, setFlyerResources] = React.useState(false);
@@ -727,7 +727,7 @@ const NavBar = () => {
               : "opacity-0 scale-95 absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
           }
         >
-          <div className="z-100 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+          <div className=" rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
             <div className="pt-5 pb-6 px-5">
               <div className="flex items-center justify-between">
                 <Link to="/">

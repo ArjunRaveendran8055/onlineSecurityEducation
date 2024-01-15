@@ -1,12 +1,13 @@
-import React from 'react'
-import BookShopContainer from '../components/features/book/BookShopContainer'
+import React from "react";
 
-const BookShopPage = () => {
+import BookShopStructure from "../components/BookShopStructure";
+
+const BookShopPage = ({ open }) => {
   return (
-    <div className='min-h-screen'>
-        <BookShopContainer/>
+    <div className="min-h-screen">
+      <BookShopStructure open={open} />
     </div>
-  )
-}
+  );
+};
 
-export default BookShopPage
+export default BookShopPage;
