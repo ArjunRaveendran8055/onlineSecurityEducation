@@ -15,12 +15,7 @@ const CourseView = () => {
   return (
     <>
       <section className="bg-gray-2 pb-10 dark:bg-dark lg:pb-20 flex justify-center items-center">
-      {
-        isLoading ? (
-          <ProductLoader/>
-        )
-        :
-        (
+
           <div className="container flex justify-center items-center">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 p-4">
           {
@@ -39,8 +34,7 @@ const CourseView = () => {
           }
           </div>
         </div>
-        )
-      }
+ 
 
 
       </section>

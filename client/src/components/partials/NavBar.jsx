@@ -627,8 +627,8 @@ const NavBar = ({open,setOpen}) => {
                     <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
       
 
-                      <a
-                        href="#"
+                      <Link
+                      to="/users/login"
                         className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
                       >
                         {/* Heroicon name: outline/calendar */}
@@ -655,7 +655,7 @@ const NavBar = ({open,setOpen}) => {
                             
                           </p>
                         </div>
-                      </a>
+                      </Link>
                       <a
                         href="#"
                         className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
@@ -685,6 +685,35 @@ const NavBar = ({open,setOpen}) => {
                           </p>
                         </div>
                       </a>
+                      <a
+                        href="#"
+                        className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
+                      >
+                        {/* Heroicon name: outline/shield-check */}
+                        <svg
+                          className="flex-shrink-0 h-6 w-6 text-indigo-600"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                          />
+                        </svg>
+                        <div className="ml-4">
+                          <p className="text-nowrap  font-poppins text-gray-900">
+                            SignIn
+                          </p>
+                          <p className="mt-1 text-sm text-gray-500">
+                            
+                          </p>
+                        </div>
+                      </a>
                     </div>
             
                   </div>
@@ -693,15 +722,13 @@ const NavBar = ({open,setOpen}) => {
 
 
 
-
-
-
-
-
               
             </nav>
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+                  <Link to="/cartDetails">
                   <CartView/>
+                  </Link>
+                 
             </div>
           </div>
         </div>

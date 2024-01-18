@@ -5,7 +5,7 @@ const initialState={
     courses:[],
     featuredCourses:[],
     selectedCourse:[],
-    isLoading:true,
+    isLoading:false,
     error:''
 }
 
@@ -15,7 +15,8 @@ const courseSlice=createSlice({
     initialState,
     reducers:{
         fetchCourses:(state,action)=>{
-            state.courses=action.payload
+            state.courses=action.payload;
+            state.isLoading=false
         },
         setLoader:(state)=>{
             state.isLoading=true
@@ -30,11 +31,12 @@ const courseSlice=createSlice({
 export function fetchCourses(){
     return async function(dispatch,getState){
                 try {
+                    
                     dispatch({type:'course/setLoader'})
                     const res= await axios.get('https://api.slingacademy.com/v1/sample-data/products')
-                     console.log(res.data);
+                     console.log("helloi",res.data.products);
                     dispatch({type:'course/fetchCourses',payload:res.data.products})
-                    dispatch({type:'course/removeLoader'})
+                    
                 } catch (error) {
                     console.log("error is",error.message)
                 }   
