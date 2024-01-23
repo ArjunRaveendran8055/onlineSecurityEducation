@@ -122,13 +122,13 @@ const LiveTrainingPage = () => {
 
         <div className="course-syllabus-container sm:px-2 lg:px-36 flex  gap-14 sm:pt-4 lg:pt-8">
           <div className="w-full flex flex-col items-stretch border-[1px] bg-whitesmoke">
-            <div className="syllabus-title">Course Syllabus</div>
+            <div className="syllabus-title pl-4">Course Syllabus</div>
             <div className="day-buttons  w-[200px] flex justify-center items-center">
-              <button className={`${day1 ?'bg-white':'bg-none'} p-2 `} onClick={()=>{setDay1(true),setDay2(false),setDay3(false)}}>
+              <button className={`${day1 ?'bg-white':'bg-none'} p-2 rounded-t-md`} onClick={()=>{setDay1(true),setDay2(false),setDay3(false)}}>
                 DAY 1</button>
-              <button className={`${day2 ?'bg-white':'bg-none'} p-2`} onClick={()=>{setDay2(true),setDay1(false),setDay3(false)}}>
+              <button className={`${day2 ?'bg-white':'bg-none'} p-2 rounded-t-md`} onClick={()=>{setDay2(true),setDay1(false),setDay3(false)}}>
                 DAY 2</button>
-              <button className={`${day3 ?'bg-white':'bg-none'} p-2`} onClick={()=>{setDay3(true),setDay1(false),setDay2(false)}}>
+              <button className={`${day3 ?'bg-white':'bg-none'} p-2 rounded-t-md`} onClick={()=>{setDay3(true),setDay1(false),setDay2(false)}}>
                 DAY 3</button>
             </div>
             <div className="day-details-container border-t-2">

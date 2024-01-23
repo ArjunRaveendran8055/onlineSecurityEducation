@@ -5,7 +5,9 @@ const initialState={
     noOfBooks:0,
     books:[],
     selectedBook:[],
-    isLoading:false,
+    categories:[],
+    feturedBooks:[],
+    loader:false,
     error:''
 }
 
@@ -14,27 +16,42 @@ const bookSlice=createSlice({
     initialState,
     reducers:{
         fetchBooks:(state,actions)=>{
-            state.books=actions.payload
+            state.books=actions.payload;
+            state.loader=false
+            
         },
-        setLoader:(state)=>{
-            state.isLoading=true
+        fetchCategories:(state,actions)=>{
+            state.categories=actions.payload
+
+        },
+        fetchingBooks:(state,actions)=>{
+            state.loader=true
         },
         setError:(state,actions)=>{
             state.error=actions.payload
         },
-        removeLoader:(state)=>{
-            state.isLoading=false
+        removeLoader:(state,actions)=>{
+            state.loader=false
         }
+
     }
 })
 
-export function fetchBooks(){
+export function fetchBooks(sort,ar){
     return async function(dispatch,getState){
+        dispatch({type:'book/fetchingBooks'})
             try {
-                dispatch({type:'book/setLoader'})
-                const res= await axios.get(`/books/getAllBooks`)
-                dispatch({type:'book/fetchBooks',payload:res.data.data})
-                dispatch({type:'book/removeLoader'})
+                const CatRes=await axios.get(`/books/getAllBooks`)
+                const finCatRes=await CatRes.data.data;
+                const categories=await finCatRes.map(item=>item.category)
+                console.log("huraiiii")
+                //making an array of uniqueCategories
+                const uniqCategories=[...new Set(categories)]
+                dispatch({type:'book/fetchCategories',payload:uniqCategories})
+                const res= await axios.get(`/books/getAllBooks?sort=${sort}&category=${ar}`)
+                const finalRes= await res.data.data
+                dispatch({type:'book/fetchBooks',payload:finalRes})
+                
             } catch (error) {
                 dispatch({type:'book/setError',payload:error.message})
             }

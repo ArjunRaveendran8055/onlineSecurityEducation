@@ -3,13 +3,30 @@ const { bookModel } = require("../models/BookModel");
 
 const getAllBookController= asyncWrapper(
     async (req,res,next)=>{
-        const {id,sort}=req.query
-        console.log(id,sort,"body");
-        const result=await bookModel.find({})
+        const {sort,category,pageSize}=req.query
+        //sorting logic
+        let queryObj={}
+        let filterObj={}
+        if(sort==="price"){
+            queryObj.price=1
+        }
+        if(sort==="-price"){
+            queryObj.price=-1
+        }
+        if(sort==="rating"){
+            queryObj.rating=-1;
+        }
+        //filter logic
+        if(category){
+            console.log("category",category);
+           catArray=category.split(",")
+            filterObj.category=catArray
+        }
+        console.log(filterObj,"filter obj from line 29")
+        const result=await bookModel.find(filterObj).sort(queryObj)
         res.status(200).json({data:result,status:"success"})
     }
 )
-
 
 module.exports={
     getAllBookController
