@@ -4,7 +4,7 @@ const loadingitem = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const ProductLoader = () => {
   return (
-    <div className="flex w-full justify-center items-center bg-orange">
+    <div className="flex w-full justify-center items-center bg-white">
       <div className="absolute top-1/2 -mt-4 -ml-2 h-40 w-40 text-specialgray border-b-2">
         <div className="absolute z-10 -ml-2 h-40 w-40 animate-bounce">
           <svg

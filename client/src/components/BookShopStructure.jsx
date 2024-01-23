@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BooksView from "./features/book/BooksView";
 import { useDispatch, useSelector } from "react-redux";
 import ProductLoader from "./Loader/ProductLoader";
@@ -11,9 +11,8 @@ export default function BookShopStructure({ open }) {
   const { loader, categories } = useSelector((state) => state.book);
   const dispatch = useDispatch();
   const [filArr, setFilArr] = useState([]);
-  const [OpenPageSize, setOpenPageSize] = useState(false);
+
   const [openCat, setOpenCat] = useState(false);
-  console.log(filArr);
   useEffect(() => {
     dispatch(fetchBooks(sort, filArr));
   }, [sort, filArr]);
@@ -125,133 +124,7 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                       </li>
                     </ul>
 
-                    <div className="border-t border-gray-200 px-4 py-6">
-                      <h3 className="-mx-2 -my-3 flow-root">
-                        {/* Expand/collapse section button */}
-                        <button
-                          type="button"
-                          className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
-                          aria-controls="filter-section-mobile-1"
-                          aria-expanded="false"
-                        >
-                          <span className="font-medium text-gray-900">
-                            PageSize
-                          </span>
-                          <span className="ml-6 flex items-center">
-                            {/* Expand icon, show/hide based on section open state. */}
-                            {!OpenPageSize ? (
-                              <svg
-                                className="h-5 w-5"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                                onClick={() => {
-                                  setOpenPageSize(true);
-                                }}
-                              >
-                                <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                              </svg>
-                            ) : (
-                              <svg
-                                className="h-5 w-5"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                                onClick={() => {
-                                  setOpenPageSize(false);
-                                }}
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            )}
-                          </span>
-                        </button>
-                      </h3>
-                      {/* Filter section, show/hide based on section state. */}
-                      {OpenPageSize && (
-                        <div className="pt-6" id="filter-section-mobile-1">
-                          <div className="space-y-6">
-                            <div className="flex items-center">
-                              <input
-                                id="filter-mobile-category-0"
-                                name="category[]"
-                                defaultValue="new-arrivals"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                              />
-                              <label
-                                htmlFor=""
-                                className="ml-3 min-w-0 flex-1 text-gray-500"
-                              >
-                                Very Vast (1000+ pages)
-                              </label>
-                            </div>
-                            <div className="flex items-center">
-                              <input
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                              />
-                              <label
-                                htmlFor="filter-mobile-category-1"
-                                className="ml-3 min-w-0 flex-1 text-gray-500"
-                              >
-                                Large (800-1000 pages)
-                              </label>
-                            </div>
-                            <div className="flex items-center">
-                              <input
-                                id="filter-mobile-category-2"
-                                name="category[]"
-                                defaultValue="travel"
-                                type="checkbox"
-                                defaultChecked=""
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                              />
-                              <label
-                                htmlFor="filter-mobile-category-2"
-                                className="ml-3 min-w-0 flex-1 text-gray-500"
-                              >
-                                Medium (300-500 pages)
-                              </label>
-                            </div>
-                            <div className="flex items-center">
-                              <input
-                                id="filter-mobile-category-3"
-                                name="category[]"
-                                defaultValue="organization"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                              />
-                              <label
-                                htmlFor="filter-mobile-category-3"
-                                className="ml-3 min-w-0 flex-1 text-gray-500"
-                              >
-                                Small (100-300 pages)
-                              </label>
-                            </div>
-                            <div className="flex items-center">
-                              <input
-                                id="filter-mobile-category-3"
-                                name="category[]"
-                                defaultValue="organization"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                              />
-                              <label
-                                htmlFor="filter-mobile-category-3"
-                                className="ml-3 min-w-0 flex-1 text-gray-500"
-                              >
-                                very Small ( {`<`} 100 pages)
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
+
 
                     <div className="border-t border-gray-200 px-4 py-6">
                       <h3 className="-mx-2 -my-3 flow-root">
@@ -296,10 +169,10 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                       </h3>
                       {/* Filter section, show/hide based on section state. */}
                       {openCat && (
-                        <div className="pt-6" id="filter-section-mobile-1">
+                        <div  className="pt-6" id="filter-section-mobile-1">
                           <div className="space-y-6">
                             {categories.map((category, index) => (
-                              <div className="flex items-center">
+                              <div key={index} className="flex items-center">
                                 <input
                                   id=""
                                   name={`filter_${index + 1}`}
@@ -320,53 +193,7 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                         </div>
                       )}
                     </div>
-
                     <div className="border-t border-gray-200 px-4 py-6">
-                      <h3 className="-mx-2 -my-3 flow-root">
-                        {/* Expand/collapse section button */}
-                        <button
-                          type="button"
-                          className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
-                          aria-controls="filter-section-mobile-2"
-                          aria-expanded="false"
-                        >
-                          <span className="font-medium text-gray-900">
-                            Price
-                          </span>
-                          <span className="ml-6 flex items-center">
-                            {/* Expand icon, show/hide based on section open state. */}
-                            <svg
-                              className="h-5 w-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                            </svg>
-                            {/* Collapse icon, show/hide based on section open state. */}
-                            <svg
-                              className="h-5 w-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </h3>
-                      {/* Filter section, show/hide based on section state. */}
-                      <div className="pt-6" id="filter-section-mobile-2">
-                        <div className="space-y-6">
-                          <div className="flex items-center">
-                            enter price filter section here
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -537,133 +364,7 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                   </li>
                 </ul>
 
-                <div className="border-b border-gray-200 py-6">
-                  <h3 className="-my-3 flow-root">
-                    {/* Expand/collapse section button */}
-                    <button
-                      type="button"
-                      className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
-                      aria-controls="filter-section-0"
-                      aria-expanded="false"
-                    >
-                      <span className="font-medium text-gray-900">
-                        PageSize
-                      </span>
-                      <span className="ml-6 flex items-center">
-                        {!OpenPageSize ? (
-                          <svg
-                            className="h-5 w-5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                            onClick={() => setOpenPageSize(true)}
-                          >
-                            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                          </svg>
-                        ) : (
-                          <svg
-                            className="h-5 w-5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                            onClick={() => setOpenPageSize(false)}
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        )}
-                      </span>
-                    </button>
-                  </h3>
 
-                  {/* Filter section, show/hide based on section state. */}
-
-                  {OpenPageSize && (
-                    <div className="pt-6" id="filter-section-0">
-                      <div className="space-y-4">
-                        <div className="flex items-center">
-                          <input
-                            id="filter-color-0"
-                            name="color[]"
-                            defaultValue="white"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                          />
-                          <label
-                            htmlFor="filter-color-0"
-                            className="ml-3 text-sm text-gray-600"
-                          >
-                            Very Vast (1000+ pages)
-                          </label>
-                        </div>
-                        <div className="flex items-center">
-                          <input
-                            id="filter-color-1"
-                            name="color[]"
-                            defaultValue="beige"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                          />
-                          <label
-                            htmlFor="filter-color-1"
-                            className="ml-3 text-sm text-gray-600"
-                          >
-                            Large (800-1000 pages)
-                          </label>
-                        </div>
-                        <div className="flex items-center">
-                          <input
-                            id="filter-color-2"
-                            name="color[]"
-                            defaultValue="blue"
-                            type="checkbox"
-                            defaultChecked=""
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                          />
-                          <label
-                            htmlFor="filter-color-2"
-                            className="ml-3 text-sm text-gray-600"
-                          >
-                            Medium (300-500 pages)
-                          </label>
-                        </div>
-                        <div className="flex items-center">
-                          <input
-                            id="filter-color-3"
-                            name="color[]"
-                            defaultValue="brown"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                          />
-                          <label
-                            htmlFor="filter-color-3"
-                            className="ml-3 text-sm text-gray-600"
-                          >
-                            Small (100-300 pages)
-                          </label>
-                        </div>
-                        <div className="flex items-center">
-                          <input
-                            id="filter-color-4"
-                            name="color[]"
-                            defaultValue="green"
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                          />
-                          <label
-                            htmlFor="filter-color-4"
-                            className="ml-3 text-sm text-gray-600"
-                          >
-                            very Small ( {`<`} 100 pages)
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
 
                 <div className="border-b border-gray-200 py-6">
                   <h3 className="-my-3 flow-root">
@@ -734,7 +435,7 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                 </div>
               </div>
               {/* Product grid */}
-              <div className="lg:col-span-3 flex items-center justify-center">
+              <div className="lg:col-span-3 flex justify-center">
                 {/* Your content */}
                 {loader ? (
                   <ProductLoader />

@@ -45,7 +45,7 @@ const SingleCard = ({
       {/*  */}
       <div
         className="mb-10 overflow-hidden rounded-lg bg-orange shadow-1 border-2 p-1
-        duration-300 hover:shadow-3 dark:bg-dark-2 dark:shadow-card dark:hover:shadow-3 flex flex-col items-center"
+        duration-300 hover:shadow-3 dark:bg-dark-2 dark:shadow-card dark:hover:shadow-3 flex flex-col items-center h-[400px]"
       >
         <div className="pt-2 flex w-full bg-white justify-center">
         <img src={image} alt="hellow" className=" flex h-40 w-40" />

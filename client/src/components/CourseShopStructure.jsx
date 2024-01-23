@@ -1,11 +1,33 @@
-import { Fragment, useState } from "react";
-import CourseView from "./features/course/courseView";
+import { useEffect, useState } from "react";
 
+import { useDispatch, useSelector } from "react-redux";
+import ProductLoader from "./Loader/ProductLoader";
+import { fetchBooks } from "./features/book/bookSlice";
+import CourseView from "./features/course/courseView";
 
 export default function CourseShopStructure({ open }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [viewSort, setViewSort] = useState(false);
- console.log("open is ",open)
+  const [sort, setSort] = useState("");
+  const { loader, categories } = useSelector((state) => state.book);
+  const dispatch = useDispatch();
+  const [filArr, setFilArr] = useState([]);
+
+  const [openCat, setOpenCat] = useState(false);
+  useEffect(() => {
+    dispatch(fetchBooks(sort, filArr));
+  }, [sort, filArr]);
+
+  const checkBoxChangeHandler = (e) => {
+    if (e.target.checked) {
+      console.log("set array and value of checked is :", e.target.checked);
+      setFilArr([...filArr, e.target.value]);
+    }
+    if (!e.target.checked) {
+      setFilArr(filArr.filter((item) => item !== e.target.value));
+    }
+  };
+
   return (
     <div className="bg-white">
       <div>
@@ -19,31 +41,11 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
           role="dialog"
           aria-modal="true"
         >
-          {/*
-  Off-canvas menu backdrop, show/hide based on off-canvas menu state.
-
-  Entering: "transition-opacity ease-linear duration-300"
-    From: "opacity-0"
-    To: "opacity-100"
-  Leaving: "transition-opacity ease-linear duration-300"
-    From: "opacity-100"
-    To: "opacity-0"
-*/}
           {mobileFiltersOpen && (
             <div>
               <div className="fixed inset-0 bg-black bg-opacity-25" />
 
               <div className="fixed inset-0 z-40 flex">
-                {/*
-                Off-canvas menu, show/hide based on off-canvas menu state.
-
-                Entering: "transition ease-in-out duration-300 transform"
-                From: "translate-x-full"
-                    To: "translate-x-0"
-                    Leaving: "transition ease-in-out duration-300 transform"
-                    From: "translate-x-0"
-                    To: "translate-x-full"
-                */}
                 <div className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                   <div className="flex items-center justify-between px-4">
                     <h2 className="text-lg font-medium text-gray-900">
@@ -74,13 +76,12 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                     </button>
                   </div>
                   {/* Filters */}
-                  <form className="mt-4 border-t border-gray-200">
+                  <div className="mt-4 border-t border-gray-200">
                     <h3 className="sr-only">Categories</h3>
                     <ul
                       role="list"
                       className="px-2 py-3 font-medium text-gray-900"
                     >
-                      <span className="font-bold">Category</span>
                       <li>
                         <a href="#" className="block px-2 py-2">
                           Mobile Security
@@ -114,293 +115,65 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                           aria-expanded="false"
                         >
                           <span className="font-medium text-gray-900">
-                            Size
+                            CategorY
                           </span>
                           <span className="ml-6 flex items-center">
-                            {/* Expand icon, show/hide based on section open state. */}
-                            <svg
-                              className="h-5 w-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                            </svg>
-                            {/* Collapse icon, show/hide based on section open state. */}
-                            <svg
-                              className="h-5 w-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
+                            {!openCat ? (
+                              <svg
+                                className="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                                onClick={() => setOpenCat(true)}
+                              >
+                                <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                              </svg>
+                            ) : (
+                              <svg
+                                className="h-5 w-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                                onClick={() => setOpenCat(false)}
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            )}
                           </span>
                         </button>
                       </h3>
                       {/* Filter section, show/hide based on section state. */}
-                      <div className="pt-6" id="filter-section-mobile-1">
-                        <div className="space-y-6">
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-0"
-                              name="category[]"
-                              defaultValue="new-arrivals"
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-0"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              Very Vast (1000+ pages)
-                            </label>
-                          </div>
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-1"
-                              name="category[]"
-                              defaultValue="sale"
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-1"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              Large (800-1000 pages)
-                            </label>
-                          </div>
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-2"
-                              name="category[]"
-                              defaultValue="travel"
-                              type="checkbox"
-                              defaultChecked=""
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-2"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              Medium (300-500 pages)
-                            </label>
-                          </div>
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-3"
-                              name="category[]"
-                              defaultValue="organization"
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-3"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              Small (100-300 pages)
-                            </label>
-                          </div>
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-3"
-                              name="category[]"
-                              defaultValue="organization"
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-3"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              very Small ( {`<`} 100 pages)
-                            </label>
+                      {openCat && (
+                        <div className="pt-6" id="filter-section-mobile-1">
+                          <div className="space-y-6">
+                            {categories.map((category, index) => (
+                              <div key={index} className="flex items-center">
+                                <input
+                                  id=""
+                                  name={`filter_${index + 1}`}
+                                  value={category}
+                                  type="checkbox"
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                  onChange={checkBoxChangeHandler}
+                                />
+                                <label
+                                  htmlFor="filter-mobile-category-0"
+                                  className="ml-3 min-w-0 flex-1 text-gray-500"
+                                >
+                                  {category}
+                                </label>
+                              </div>
+                            ))}
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
-
-
-
-
-
-                    <div className="border-t border-gray-200 px-4 py-6">
-                      <h3 className="-mx-2 -my-3 flow-root">
-                        {/* Expand/collapse section button */}
-                        <button
-                          type="button"
-                          className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
-                          aria-controls="filter-section-mobile-1"
-                          aria-expanded="false"
-                        >
-                          <span className="font-medium text-gray-900">
-                            Size
-                          </span>
-                          <span className="ml-6 flex items-center">
-                            {/* Expand icon, show/hide based on section open state. */}
-                            <svg
-                              className="h-5 w-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                            </svg>
-                            {/* Collapse icon, show/hide based on section open state. */}
-                            <svg
-                              className="h-5 w-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </h3>
-                      {/* Filter section, show/hide based on section state. */}
-                      <div className="pt-6" id="filter-section-mobile-1">
-                        <div className="space-y-6">
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-0"
-                              name="category[]"
-                              defaultValue="new-arrivals"
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-0"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              Web Application Security
-                            </label>
-                          </div>
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-1"
-                              name="category[]"
-                              defaultValue="sale"
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-1"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              Large (800-1000 pages)
-                            </label>
-                          </div>
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-2"
-                              name="category[]"
-                              defaultValue="travel"
-                              type="checkbox"
-                              defaultChecked=""
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-2"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              Medium (300-500 pages)
-                            </label>
-                          </div>
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-3"
-                              name="category[]"
-                              defaultValue="organization"
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-3"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              Small (100-300 pages)
-                            </label>
-                          </div>
-                          <div className="flex items-center">
-                            <input
-                              id="filter-mobile-category-3"
-                              name="category[]"
-                              defaultValue="organization"
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor="filter-mobile-category-3"
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              very Small ( {`<`} 100 pages)
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-
-
-                    <div className="border-t border-gray-200 px-4 py-6">
-                      <h3 className="-mx-2 -my-3 flow-root">
-                        {/* Expand/collapse section button */}
-                        <button
-                          type="button"
-                          className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
-                          aria-controls="filter-section-mobile-2"
-                          aria-expanded="false"
-                        >
-                          <span className="font-medium text-gray-900">
-                            Price
-                          </span>
-                          <span className="ml-6 flex items-center">
-                            {/* Expand icon, show/hide based on section open state. */}
-                            <svg
-                              className="h-5 w-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                            </svg>
-                            {/* Collapse icon, show/hide based on section open state. */}
-                            <svg
-                              className="h-5 w-5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </span>
-                        </button>
-                      </h3>
-                      {/* Filter section, show/hide based on section state. */}
-                      <div className="pt-6" id="filter-section-mobile-2">
-                        <div className="space-y-6">
-                          <div className="flex items-center">
-                            enter price filter section here
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
+                    <div className="border-t border-gray-200 px-4 py-6"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -477,57 +250,66 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                     aria-labelledby="menu-button"
                     tabIndex={-1}
                   >
-                    <div className="py-1" role="none">
+                    <div className="py-1  cursor-pointer" role="none">
                       {/*
                             Active: "bg-gray-100", Not Active: ""
 
                             Selected: "font-medium text-gray-900", Not Selected: "text-gray-500"
                         */}
-                      <a
-                        href="#"
+
+                      <div
                         className="font-medium text-gray-900 block px-4 py-2 text-sm"
-                        role="menuitem"
+                        role=""
                         tabIndex={-1}
                         id="menu-item-0"
+                        onClick={() => setViewSort(false)}
                       >
-                        Most Popular
-                      </a>
+                        Default
+                      </div>
                       <a
-                        href="#"
                         className="text-gray-500 block px-4 py-2 text-sm"
                         role="menuitem"
                         tabIndex={-1}
                         id="menu-item-1"
+                        onClick={() => {
+                          setSort("rating"), setViewSort(false);
+                        }}
                       >
                         Best Rating
                       </a>
-                      <a
-                        href="#"
+                      <div
                         className="text-gray-500 block px-4 py-2 text-sm"
                         role="menuitem"
                         tabIndex={-1}
                         id="menu-item-2"
+                        onClick={() => {
+                          setSort("publicationYear"), setViewSort(false);
+                        }}
                       >
                         Newest
-                      </a>
-                      <a
-                        href="#"
+                      </div>
+                      <div
                         className="text-gray-500 block px-4 py-2 text-sm"
                         role="menuitem"
                         tabIndex={-1}
                         id="menu-item-3"
+                        onClick={() => {
+                          setSort("price"), setViewSort(false);
+                        }}
                       >
                         Price: Low to High
-                      </a>
-                      <a
-                        href="#"
+                      </div>
+                      <div
                         className="text-gray-500 block px-4 py-2 text-sm"
                         role="menuitem"
                         tabIndex={-1}
                         id="menu-item-4"
+                        onClick={() => {
+                          setSort("-price"), setViewSort(false);
+                        }}
                       >
                         Price: High to Low
-                      </a>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -540,8 +322,8 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
             </h2>
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
-              <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
+              <div className="hidden lg:block">
+                <h3 className="sr-only for large screen">Categories</h3>
                 <ul
                   role="list"
                   className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
@@ -559,172 +341,84 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                     <a href="#">Secuirty Analysis</a>
                   </li>
                 </ul>
+
                 <div className="border-b border-gray-200 py-6">
                   <h3 className="-my-3 flow-root">
-                    {/* Expand/collapse section button */}
+                    {/* Expand/collapse section button FOR LARGE SCREEN */}
                     <button
                       type="button"
                       className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
                       aria-controls="filter-section-0"
                       aria-expanded="false"
                     >
-                      <span className="font-medium text-gray-900">Size</span>
+                      <span className="font-medium text-gray-900">
+                        Category
+                      </span>
                       <span className="ml-6 flex items-center">
-                        {/* Expand icon, show/hide based on section open state. */}
-                        <svg
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                        </svg>
-                        {/* Collapse icon, show/hide based on section open state. */}
-                        <svg
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
+                        {!openCat ? (
+                          <svg
+                            className="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                            onClick={() => setOpenCat(true)}
+                          >
+                            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                          </svg>
+                        ) : (
+                          <svg
+                            className="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                            onClick={() => setOpenCat(false)}
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        )}
                       </span>
                     </button>
                   </h3>
+
                   {/* Filter section, show/hide based on section state. */}
-                  <div className="pt-6" id="filter-section-0">
-                    <div className="space-y-4">
-                      <div className="flex items-center">
-                        <input
-                          id="filter-color-0"
-                          name="color[]"
-                          defaultValue="white"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <label
-                          htmlFor="filter-color-0"
-                          className="ml-3 text-sm text-gray-600"
-                        >
-                          Very Vast (1000+ pages)
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="filter-color-1"
-                          name="color[]"
-                          defaultValue="beige"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <label
-                          htmlFor="filter-color-1"
-                          className="ml-3 text-sm text-gray-600"
-                        >
-                          Large (800-1000 pages)
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="filter-color-2"
-                          name="color[]"
-                          defaultValue="blue"
-                          type="checkbox"
-                          defaultChecked=""
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <label
-                          htmlFor="filter-color-2"
-                          className="ml-3 text-sm text-gray-600"
-                        >
-                          Medium (300-500 pages)
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="filter-color-3"
-                          name="color[]"
-                          defaultValue="brown"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <label
-                          htmlFor="filter-color-3"
-                          className="ml-3 text-sm text-gray-600"
-                        >
-                          Small (100-300 pages)
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="filter-color-4"
-                          name="color[]"
-                          defaultValue="green"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        <label
-                          htmlFor="filter-color-4"
-                          className="ml-3 text-sm text-gray-600"
-                        >
-                          very Small ( {`<`} 100 pages)
-                        </label>
+                  {openCat && (
+                    <div className="pt-6" id="filter-section-0">
+                      <div className="space-y-4">
+                        {categories.map((category, index) => (
+                          <div key={index} className="flex items-center">
+                            <input
+                              name={`filter_${index + 1}`}
+                              value={category}
+                              type="checkbox"
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              onChange={checkBoxChangeHandler}
+                            />
+                            <label
+                              htmlFor="filter-color-0"
+                              className="ml-3 text-sm text-gray-600"
+                            >
+                              {category}
+                            </label>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-                <div className="border-b border-gray-200 py-6">
-                  <h3 className="-my-3 flow-root">
-                    {/* Expand/collapse section button */}
-                    <button
-                      type="button"
-                      className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
-                      aria-controls="filter-section-1"
-                      aria-expanded="false"
-                    >
-                      <span className="font-medium text-gray-900">Price</span>
-                      <span className="ml-6 flex items-center">
-                        {/* Expand icon, show/hide based on section open state. */}
-                        <svg
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                        </svg>
-                        {/* Collapse icon, show/hide based on section open state. */}
-                        <svg
-                          className="h-5 w-5"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </h3>
-                  {/* Filter section, show/hide based on section state. */}
-                  <div className="pt-6" id="filter-section-1">
-                    enter price details here
-                  </div>
-                </div>
-              </form>
-            
+              </div>
               {/* Product grid */}
-              <div className="lg:col-span-3">
+              <div className="lg:col-span-3 flex justify-center">
                 {/* Your content */}
-                <CourseView/>
-                </div>
+                {loader ? (
+                  <ProductLoader />
+                ) : (
+                  <CourseView setSort={setSort} sort={sort} />
+                )}
+              </div>
             </div>
           </section>
         </main>

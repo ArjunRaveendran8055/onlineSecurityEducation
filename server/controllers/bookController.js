@@ -30,10 +30,11 @@ const getAllBookController= asyncWrapper(
            console.log("fliter object in line 31 is",filterObj);
         }
         console.log(filterObj,"filter obj from line 29")
-        //demoQuery
-         const result=await bookModel.find(filterObj).sort(queryObj)
 
         //original query
+         const result=await bookModel.find(filterObj).sort(queryObj)
+
+        //demoQuery
         // const result=await bookModel.find(filterObj).sort(queryObj)
 
 
