@@ -22,8 +22,22 @@ const getAllBookController= asyncWrapper(
            catArray=category.split(",")
             filterObj.category=catArray
         }
+        if(pageSize){
+           const pageSizeAr=pageSize.split(",")
+           filterObj.pageSize={}
+           filterObj.pageSize.$gte=Number(pageSizeAr[0]),
+           filterObj.pageSize.$lte=Number(pageSizeAr[1])
+           console.log("fliter object in line 31 is",filterObj);
+        }
         console.log(filterObj,"filter obj from line 29")
-        const result=await bookModel.find(filterObj).sort(queryObj)
+        //demoQuery
+         const result=await bookModel.find(filterObj).sort(queryObj)
+
+        //original query
+        // const result=await bookModel.find(filterObj).sort(queryObj)
+
+
+
         res.status(200).json({data:result,status:"success"})
     }
 )
