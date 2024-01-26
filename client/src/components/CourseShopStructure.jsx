@@ -2,20 +2,21 @@ import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import ProductLoader from "./Loader/ProductLoader";
-import { fetchBooks } from "./features/book/bookSlice";
-import CourseView from "./features/course/courseView";
 
+import CourseView from "./features/course/CourseView";
+import { fetchCourses } from "./features/course/courseSlice";
 export default function CourseShopStructure({ open }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [viewSort, setViewSort] = useState(false);
   const [sort, setSort] = useState("");
-  const { loader, categories } = useSelector((state) => state.book);
   const dispatch = useDispatch();
   const [filArr, setFilArr] = useState([]);
 
+  const { loader, categories } = useSelector((state) => state.course);
+
   const [openCat, setOpenCat] = useState(false);
   useEffect(() => {
-    dispatch(fetchBooks(sort, filArr));
+    dispatch(fetchCourses(sort, filArr));
   }, [sort, filArr]);
 
   const checkBoxChangeHandler = (e) => {
@@ -277,17 +278,6 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                       >
                         Best Rating
                       </a>
-                      <div
-                        className="text-gray-500 block px-4 py-2 text-sm"
-                        role="menuitem"
-                        tabIndex={-1}
-                        id="menu-item-2"
-                        onClick={() => {
-                          setSort("publicationYear"), setViewSort(false);
-                        }}
-                      >
-                        Newest
-                      </div>
                       <div
                         className="text-gray-500 block px-4 py-2 text-sm"
                         role="menuitem"

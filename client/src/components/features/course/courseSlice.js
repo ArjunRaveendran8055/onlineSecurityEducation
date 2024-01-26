@@ -4,8 +4,9 @@ const initialState={
     noOfCourses:10,
     courses:[],
     featuredCourses:[],
-    selectedCourse:[],
-    isLoading:false,
+    categories:[],
+    selectedCourse:{},
+    loader:false,
     error:''
 }
 
@@ -16,35 +17,41 @@ const courseSlice=createSlice({
     reducers:{
         fetchCourses:(state,action)=>{
             state.courses=action.payload;
-            state.isLoading=false
+            state.loader=false
         },
         setLoader:(state)=>{
-            state.isLoading=true
+            state.loader=true
         },
-        removeLoader:(state)=>{
-            state.isLoading=false
+        fetchCategories:(state,actions)=>{
+            state.categories=actions.payload
+        },
+        setSelectedCourse:(state,actions)=>{
+            state.selectedCourse=actions.payload;
         }
-
     }
 })
 
-export function fetchCourses(){
+export function fetchCourses(sort,ar){
     return async function(dispatch,getState){
+        dispatch({type:'course/setLoader'})
                 try {
-                    
-                    dispatch({type:'course/setLoader'})
-                    const res= await axios.get('https://api.slingacademy.com/v1/sample-data/products')
-                     console.log("helloi",res.data.products);
-                    dispatch({type:'course/fetchCourses',payload:res.data.products})
-                    
+                    const CatRes=await axios.get(`/courses/getAllCourses`)
+                    const finCatRes=await CatRes.data.data;
+                    const categories=await finCatRes.map(item=>item.category)
+                    //making an array of uniqueCategories
+                    const uniqCategories=[...new Set(categories)]
+                    dispatch({type:'course/fetchCategories',payload:uniqCategories})
+                    const res= await axios.get(`/courses/getAllCourses?sort=${sort}&category=${ar}`)
+                     const finRes=res.data.data
+                    dispatch({type:'course/fetchCourses',payload:finRes})
                 } catch (error) {
                     console.log("error is",error.message)
                 }   
             }
-            
 }
-
+export const {setSelectedCourse} =courseSlice.actions
 export default courseSlice.reducer
+
 
 
 

@@ -4,6 +4,7 @@ const { adminAuthRoute } = require("./routes/adminAuthRoute");
 const { connectDb } = require("./DB/connectDb");
 const { errorHandler } = require("./middleware/errorHandler");
 const { bookRoute } = require("./routes/bookRoute");
+const { courseRoute } = require("./routes/courseRoute");
 
 const app=express();
 
@@ -19,13 +20,13 @@ app.use(cors({
 //admin Routes
 app.use("/adminLogin",adminAuthRoute)
 
-//course Routes
+//Book Routes
 app.use("/books",bookRoute)
 
+//CourseRoutes
+app.use("/courses",courseRoute)
+
 app.use(errorHandler)
-
-
-
 
 
 

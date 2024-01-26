@@ -1,17 +1,19 @@
 const { asyncWrapper } = require("../helpers/asyncWrapper");
-const { bookModel } = require("../models/BookModel");
+const { CourseModel } = require("../models/CourseModel");
 
-const getAllBookController= asyncWrapper(
+
+const getAllCourseController=asyncWrapper(
+
     async (req,res,next)=>{
-        const {sort,category,pageSize}=req.query
+        const {sort,category}=req.query
         //sorting logic
         let queryObj={}
         let filterObj={}
         if(sort==="price"){
-            queryObj.price=1
+            queryObj.enrollment_fee=1
         }
         if(sort==="-price"){
-            queryObj.price=-1
+            queryObj.enrollment_fee=-1
         }
         if(sort==="rating"){
             queryObj.rating=-1;
@@ -33,7 +35,7 @@ const getAllBookController= asyncWrapper(
         console.log(filterObj,"filter obj from line 29")
 
         //original query
-         const result=await bookModel.find(filterObj).sort(queryObj)
+         const result=await CourseModel.find(filterObj).sort(queryObj)
 
         //demoQuery
         // const result=await bookModel.find(filterObj).sort(queryObj)
@@ -41,6 +43,4 @@ const getAllBookController= asyncWrapper(
     }
 )
 
-module.exports={
-    getAllBookController
-}
+module.exports={getAllCourseController}
