@@ -15,19 +15,15 @@ const SelectedCourseDetails = () => {
     if(items.length ===0){
       return dispatch(updateCart(selectedCourse))
     }
-    items.filter((item)=>{
-      if(item._id===selectedCourse._id){
-        console.log("matching Hit");
-        console.log("selectedCourse Id : ", selectedCourse._id);
-        console.log("courseId in cartItem array is: ", item._id);
-        return setCartLlink(true)
+
+      const ar=items.filter(item=>item._id===selectedCourse._id)
+      console.log("similar item array ar is:=>",ar)
+      if(ar.length===0){
+       return dispatch(updateCart(selectedCourse))
       }
       else{
-        dispatch(updateCart(selectedCourse))
+        return console.log("nadakulla pathueyyy...");
       }
-
-
-    })
     
   };
 

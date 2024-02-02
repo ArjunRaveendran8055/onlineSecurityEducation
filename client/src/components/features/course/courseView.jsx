@@ -8,15 +8,16 @@ const CourseView = ({ sort, setSort }) => {
   const navigate=useNavigate()
   //console.log("selectedCourse",selectedCourse)
   const courseClickHandler=(item)=>{
+    console.log("selected item in course view is",item)
      dispatch(setSelectedCourse(item))
-     navigate("/allCourses/courseDetails")
+     return navigate("/allCourses/courseDetails")
   }
 
   return (
     <>
       <section className="bg-gray-2 pb-10 dark:bg-dark lg:pb-20 flex justify-center items-center">
         <div className="container flex justify-center items-center">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 p-4">
+          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
             {courses.map((item, key) => (
               <div
                 key={key}
