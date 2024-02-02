@@ -7,7 +7,6 @@ const CourseView = ({ sort, setSort }) => {
   const dispatch=useDispatch()
   const navigate=useNavigate()
   //console.log("selectedCourse",selectedCourse)
-
   const courseClickHandler=(item)=>{
      dispatch(setSelectedCourse(item))
      navigate("/allCourses/courseDetails")

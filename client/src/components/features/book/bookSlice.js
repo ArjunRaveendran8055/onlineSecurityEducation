@@ -33,7 +33,6 @@ const bookSlice=createSlice({
         removeLoader:(state,actions)=>{
             state.loader=false
         }
-
     }
 })
 

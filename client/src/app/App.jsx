@@ -14,10 +14,6 @@ import axios from "axios";
 
 axios.defaults.baseURL="http://localhost:8055";
 axios.defaults.withCredentials=true
-// axios.defaults.headers={
-//   'Access-Control-Allow-Origin' : ["http://127.0.0.1:5173", "http://localhost:5173"],
-// }
-
 
 
 const App = () => {
