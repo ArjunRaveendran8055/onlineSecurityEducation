@@ -4,7 +4,9 @@ import LiveTrainingPage from "./pages/LiveTrainingPage";
 import CourseShopPage from "./pages/CourseShopPage";
 import CartDetailsPage from "./pages/CartDetailsPage";
 import LoginPage from "./pages/LoginPage";
+import AdminLoginPage from "./pages/AdminLoginPage";
 export {
+    AdminLoginPage,
     ApplicationSecurityServices,
     LiveTrainingPage,
     BookShopPage,

@@ -1,15 +1,15 @@
 import React from "react";
 import NavBar from "../components/partials/NavBar";
 import { Route, Routes } from "react-router-dom";
-
-import AdminLogin from "../UiAdmin/Pages/AdminLogin";
 import SelectedCourseDetails from "../components/features/course/SelectedCourseDetails";
 import Home from "../pages/Home/Home";
 
 import BlogsView from "../components/features/blog/BlogsView";
-import { ApplicationSecurityServices, BookShopPage, CartDetailsPage, CourseShopPage, LiveTrainingPage, LoginPage } from "../Routes";
+import { AdminLoginPage, ApplicationSecurityServices, BookShopPage, 
+  CartDetailsPage, CourseShopPage, LiveTrainingPage, LoginPage } from "../Routes";
 import SelectedBookDetails from "../components/features/book/SelectedBookDetails";
 import axios from "axios";
+
 
 
 axios.defaults.baseURL="http://localhost:8055";
@@ -34,7 +34,7 @@ const App = () => {
           <Route path="/cartDetails" element={<CartDetailsPage/>}/>
         </Route>
 
-        <Route path="/admin" element={<AdminLogin/>}>
+        <Route path="/admin/login" element={<AdminLoginPage/>}>
 
         </Route>
         <Route>

@@ -24,22 +24,12 @@ const getAllCourseController=asyncWrapper(
            catArray=category.split(",")
             filterObj.category=catArray
         }
-        //pagesize filter logic
-        // if(pageSize){
-        //    const pageSizeAr=pageSize.split(",")
-        //    filterObj.pageSize={}
-        //    filterObj.pageSize.$gte=Number(pageSizeAr[0]),
-        //    filterObj.pageSize.$lte=Number(pageSizeAr[1])
-        //    console.log("fliter object in line 31 is",filterObj);
-        // }
+
         console.log(filterObj,"filter obj from line 29")
 
         //original query
          const result=await CourseModel.find(filterObj).sort(queryObj)
-
-        //demoQuery
-        // const result=await bookModel.find(filterObj).sort(queryObj)
-        res.status(200).json({data:result,status:"success"})
+         res.status(200).json({data:result,status:"success"})
     }
 )
 

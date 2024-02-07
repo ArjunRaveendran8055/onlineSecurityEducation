@@ -1,14 +1,13 @@
 const express=require("express");
 const cors=require("cors")
 const { adminAuthRoute } = require("./routes/adminAuthRoute");
-const { connectDb } = require("./DB/connectDb");
 const { errorHandler } = require("./middleware/errorHandler");
 const { bookRoute } = require("./routes/bookRoute");
 const { courseRoute } = require("./routes/courseRoute");
+const morgan = require("morgan");
 
 const app=express();
 
-require("dotenv").config()
 
 app.use(express.json())
 
@@ -17,8 +16,10 @@ app.use(cors({
     credentials:true
 }))
 
+
 //admin Routes
-app.use("/adminLogin",adminAuthRoute)
+app.use("/admin",adminAuthRoute)
+
 
 //Book Routes
 app.use("/books",bookRoute)
@@ -26,27 +27,19 @@ app.use("/books",bookRoute)
 //CourseRoutes
 app.use("/courses",courseRoute)
 
+//using morgan middleware
+
+app.use(morgan("dev"))
+
+
+
+
 app.use(errorHandler)
 
 
 
-const port=process.env.PORT || 8055
-
-const startServer = async ()=>{
-    try {
-        await connectDb(process.env.MONGO)
-        console.log("connected to database...")
-        app.listen(port, ()=>{
-            console.log(`Server running at Port ${port}.`);
-        })
-    } catch (error) {
-       console.log(error.message)
-    }
-    }
-
-    startServer()
 
 
-
+module.exports={app}
 
 
