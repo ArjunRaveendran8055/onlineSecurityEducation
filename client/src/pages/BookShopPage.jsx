@@ -1,5 +1,6 @@
 import React from "react";
-import BookShopStructure from "../components/BookShopStructure";
+import BookShopStructure from "../components/partials/BookShopStructure";
+
 const BookShopPage = ({ open }) => {
   return (
     <div className="min-h-screen">

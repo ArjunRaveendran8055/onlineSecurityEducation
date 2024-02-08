@@ -5,42 +5,52 @@ import SelectedCourseDetails from "../components/features/course/SelectedCourseD
 import Home from "../pages/Home/Home";
 
 import BlogsView from "../components/features/blog/BlogsView";
-import { AdminLoginPage, ApplicationSecurityServices, BookShopPage, 
-  CartDetailsPage, CourseShopPage, LiveTrainingPage, LoginPage } from "../Routes";
+import {
+  AdminLoginPage,
+  ApplicationSecurityServices,
+  BookShopPage,
+  CartDetailsPage,
+  CourseShopPage,
+  LiveTrainingPage,
+  LoginPage,
+} from "../Routes";
 import SelectedBookDetails from "../components/features/book/SelectedBookDetails";
 import axios from "axios";
+import ToastContainer from "../components/features/toast/ToastContainer";
 
-
-
-axios.defaults.baseURL="http://localhost:8055";
-axios.defaults.withCredentials=true
-
+axios.defaults.baseURL = "http://localhost:8055";
+axios.defaults.withCredentials = true;
 
 const App = () => {
   const [open, setOpen] = React.useState(false);
   return (
-    <div className="items-stretch">
+    <div className="relative items-stretch">
+      <ToastContainer />
       <Routes>
-      <Route path="/users/login" element={<LoginPage/>}/>
-        <Route path="" element={<NavBar open={open} setOpen={setOpen}/>}>
-          <Route path="/" element={<Home/>} />
+        <Route path="/users/login" element={<LoginPage />} />
+        <Route path="" element={<NavBar open={open} setOpen={setOpen} />}>
+          <Route path="/" element={<Home />} />
           <Route path="/allCourses" element={<CourseShopPage open={open} />} />
-          <Route path={`/allCourses/courseDetails`} element={<SelectedCourseDetails/>}/>
-          <Route path="/applicationSecurityServices" element={<ApplicationSecurityServices/>}/>
-          <Route path="/liveTraining" element={<LiveTrainingPage/>}/>
-          <Route path="/allBlogs" element={<BlogsView/>}/>
-          <Route path="allBooks" element={<BookShopPage open={open}/>}/>
-          <Route path={`allBooks/bookDetails`} element={<SelectedBookDetails/>} />
-          <Route path="/cartDetails" element={<CartDetailsPage/>}/>
+          <Route
+            path={`/allCourses/courseDetails`}
+            element={<SelectedCourseDetails />}
+          />
+          <Route
+            path="/applicationSecurityServices"
+            element={<ApplicationSecurityServices />}
+          />
+          <Route path="/liveTraining" element={<LiveTrainingPage />} />
+          <Route path="/allBlogs" element={<BlogsView />} />
+          <Route path="allBooks" element={<BookShopPage open={open} />} />
+          <Route
+            path={`allBooks/bookDetails`}
+            element={<SelectedBookDetails />}
+          />
+          <Route path="/cartDetails" element={<CartDetailsPage />} />
         </Route>
 
-        <Route path="/admin/login" element={<AdminLoginPage/>}>
-
-        </Route>
-        <Route>
-        
-
-        </Route>
+        <Route path="/admin" element={<AdminLoginPage />}></Route>
+        <Route></Route>
       </Routes>
     </div>
   );

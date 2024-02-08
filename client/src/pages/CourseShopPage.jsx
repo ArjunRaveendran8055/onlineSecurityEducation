@@ -1,7 +1,7 @@
 import React from "react";
-import CourseShopStructure from "../components/CourseShopStructure";
 import { useSelector } from "react-redux";
 import ProductLoader from "../components/Loader/ProductLoader";
+import CourseShopStructure from "../components/partials/CourseShopStructure";
 const CourseShopPage = ({ open }) => {
   const { isLoading } = useSelector((state) => state.course);
   

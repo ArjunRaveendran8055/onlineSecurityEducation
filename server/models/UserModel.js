@@ -9,7 +9,12 @@ const userSchema= new mongoose.Schema({
     password:{
         type:String,
         required:[true,"password is required"],
-        minLength:[4,"password must be atleast 4 character"]
+        minLength:[4,"password must be atleast 4 characters"]
+    },
+    username:{
+      type:String,
+      required:[true,"name is required"],
+      minLength:[3,"name must me atleast 3 characers"]
     },
     address:[
             {
@@ -35,7 +40,7 @@ const userSchema= new mongoose.Schema({
           ],
     role:{
         type:String,
-        required:true
+        required:[true,"role is required"]
     },
 
     avatar:{
@@ -50,8 +55,8 @@ const userSchema= new mongoose.Schema({
       type:String,
       required:false
     }
+  })
 
-    
-    
+  const UserModel=mongoose.model("users",userSchema)
 
-})
+  module.exports={UserModel}

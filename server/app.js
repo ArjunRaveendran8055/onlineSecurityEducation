@@ -1,10 +1,11 @@
 const express=require("express");
 const cors=require("cors")
-const { adminAuthRoute } = require("./routes/adminAuthRoute");
+
 const { errorHandler } = require("./middleware/errorHandler");
 const { bookRoute } = require("./routes/bookRoute");
 const { courseRoute } = require("./routes/courseRoute");
 const morgan = require("morgan");
+const { adminRoute } = require("./routes/adminRoute");
 
 const app=express();
 
@@ -18,7 +19,7 @@ app.use(cors({
 
 
 //admin Routes
-app.use("/admin",adminAuthRoute)
+app.use("/admin",adminRoute)
 
 
 //Book Routes

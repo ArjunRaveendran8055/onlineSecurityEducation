@@ -2,9 +2,40 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../Styles/Styles";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setToastView } from "../features/toast/toastSlice";
+import axios from "axios";
 
 const AdminLogin = () => {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  // console.log(user,"email and password")
+
+  const handleLoginSubmit = async () => {
+    if(user.email.length===0 || user.password.length===0 ){
+      return dispatch(setToastView({type:"error",msg:"Enter Complete Credentials"}))
+    }
+    await axios
+      .post("/admin/login", { email: user.email, password: user.password })
+      .then((res) => {
+        //console.log(res);
+        const {message}=res.data.data
+        
+      })
+      .catch((err) => {
+
+        //fetching server error msg from the response
+        const { error } = err.response.data;
+
+        //setting toastcontainer with the server errorMsg
+        dispatch(setToastView({ type: "error", msg: error }));
+      });
+  };
   return (
     <div className=" min-h-screen bg-gray-50  flex flex-col justify-center py-12 sm:px-6 lg:px-8 ">
       <div className=" sm:mx-auto sm:w-full sm:max-w-md">
@@ -14,7 +45,7 @@ const AdminLogin = () => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white  sm:rounded py-8 px-8 shadow-md">
-          <form action="" className="space-y-6">
+          <div className="space-y-6">
             <div>
               <label
                 htmlFor=""
@@ -30,6 +61,8 @@ const AdminLogin = () => {
                   placeholder="Email"
                   autoComplete="email"
                   className="appearance-none pl-3 placeholder:text-green-500 block w-full py-2 border-black border rounded-md shadow-sm"
+                  value={user.email}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
                 />
               </div>
             </div>
@@ -48,6 +81,10 @@ const AdminLogin = () => {
                   placeholder="Password"
                   autoComplete="password"
                   className="appearance-none pl-3  border-black border rounded placeholder:text-green-500 block w-full py-2"
+                  value={user.password}
+                  onChange={(e) =>
+                    setUser({ ...user, password: e.target.value })
+                  }
                 />
                 {visible ? (
                   <AiOutlineEyeInvisible
@@ -63,8 +100,8 @@ const AdminLogin = () => {
               </div>
             </div>
 
-            <div className={`${styles.normalFlex} justify-between`}>
-              <div className={`${styles.normalFlex}`}>
+            <div className={`${styles.normalFlex} justify-between `}>
+              <div className={`${styles.normalFlex} mt-10`}>
                 <input
                   id="remember-me"
                   name="remeber-me"
@@ -78,7 +115,7 @@ const AdminLogin = () => {
                   Remember me?
                 </label>
               </div>
-              <div className="text-sm">
+              <div className="text-sm mt-10">
                 <a
                   href="/forgot-password"
                   className="font-medium text-blue-500 hover:text-blue-600 hover:underline underline-offset-2"
@@ -90,17 +127,13 @@ const AdminLogin = () => {
 
             <button
               type="submit"
-              className="group relative w-full h-10 flex justify-center py-2 px-4 border border-transparent text-white text-sm font-medium rounded-md bg-blue-500 hover:bg-blue-700"
+              onClick={handleLoginSubmit}
+              className="group relative w-full h-10 flex justify-center py-2 px-4 border border-transparent text-black text-sm font-medium rounded-md bg-blue-500 hover:bg-blue-700"
             >
               Submit
             </button>
-            <div className={`${styles.normalFlex} w-full`}>
-              <h4>Don&apos;t have an account</h4>
-              <Link to={"/sign-up"} className="text-blue-600 pl-2">
-                SignUp
-              </Link>
-            </div>
-          </form>
+            <div className={`${styles.normalFlex} w-full h-10`}></div>
+          </div>
         </div>
       </div>
     </div>

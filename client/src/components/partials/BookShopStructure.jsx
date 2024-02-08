@@ -124,8 +124,6 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                       </li>
                     </ul>
 
-
-
                     <div className="border-t border-gray-200 px-4 py-6">
                       <h3 className="-mx-2 -my-3 flow-root">
                         {/* Expand/collapse section button */}
@@ -169,7 +167,7 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                       </h3>
                       {/* Filter section, show/hide based on section state. */}
                       {openCat && (
-                        <div  className="pt-6" id="filter-section-mobile-1">
+                        <div className="pt-6" id="filter-section-mobile-1">
                           <div className="space-y-6">
                             {categories.map((category, index) => (
                               <div key={index} className="flex items-center">
@@ -193,8 +191,7 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                         </div>
                       )}
                     </div>
-                    <div className="border-t border-gray-200 px-4 py-6">
-                    </div>
+                    <div className="border-t border-gray-200 px-4 py-6"></div>
                   </div>
                 </div>
               </div>
@@ -363,8 +360,6 @@ Off-canvas filters for mobile, show/hide based on off-canvas filters state.
                     <a href="#">Secuirty Analysis</a>
                   </li>
                 </ul>
-
-
 
                 <div className="border-b border-gray-200 py-6">
                   <h3 className="-my-3 flow-root">
