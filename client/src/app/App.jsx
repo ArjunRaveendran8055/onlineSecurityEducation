@@ -17,6 +17,8 @@ import {
 import SelectedBookDetails from "../components/features/book/SelectedBookDetails";
 import axios from "axios";
 import ToastContainer from "../components/features/toast/ToastContainer";
+import SideBar from "../components/partials/SideBar";
+import AdminHomePage from "../pages/AdminHomePage";
 
 axios.defaults.baseURL = "http://localhost:8055";
 axios.defaults.withCredentials = true;
@@ -50,7 +52,9 @@ const App = () => {
         </Route>
 
         <Route path="/admin" element={<AdminLoginPage />}></Route>
-        <Route></Route>
+        <Route path="" element={<SideBar />}>
+          <Route path="/dashBoard" element={<AdminHomePage />} />
+        </Route>
       </Routes>
     </div>
   );

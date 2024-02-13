@@ -5,7 +5,6 @@ const { UserModel } = require("../models/UserModel");
 const { comparePass } = require("../utils/bcrypt");
 const { jwtSign } = require("../utils/jsonwebtoken");
 
-
 const LoginController= asyncWrapper(
     async (req,res,next)=>{
       const  {email,password}=req.body;
@@ -30,7 +29,6 @@ const LoginController= asyncWrapper(
 
          let expDate= new Date(Date.now()+3600000*12)
          res.status(200).cookie("token",token,{expires: expDate,httpOnly:true,sameSite:"lax"}).json({data:result,message:"Login SuccessFul.",success:true})
-
 
     }
 )
