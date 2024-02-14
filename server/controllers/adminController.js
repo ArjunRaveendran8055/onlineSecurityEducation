@@ -3,7 +3,7 @@ const { AppError } = require("../AppError")
 const { asyncWrapper } = require("../helpers/asyncWrapper")
 const { UserModel } = require("../models/UserModel");
 const { comparePass } = require("../utils/bcrypt");
-const { jwtSign } = require("../utils/jsonwebtoken");
+const { jwtSign, jwtVerify } = require("../utils/jsonwebtoken");
 
 const LoginController= asyncWrapper(
     async (req,res,next)=>{
@@ -33,9 +33,18 @@ const LoginController= asyncWrapper(
     }
 )
 
+
+//controller to varify Admin
 const verifyAdminController=asyncWrapper(
   async (req,res,next)=>{
-
+    const cookie=req.headers.cookie;
+    const token=cookie.split("=")[1]
+    const user=jwtVerify(token)
+    
+    if(!user){
+      console.log("hai mammu",user);
+      throw new AppError("Your Token Has Expired.",400)
+    }
   }
 )
 

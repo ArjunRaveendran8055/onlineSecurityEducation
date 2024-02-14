@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CiLogout } from "react-icons/ci";
 import { HiOutlineHomeModern } from "react-icons/hi2";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
+import { verifyAdmin } from "../features/users/userSlice";
 
 const SideBar = () => {
+  const { noOfUsers, errorMsg, loader } = useSelector((state) => state.user);
+  console.log("error is:",errorMsg);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(verifyAdmin());
+  }, []);
+
+
   return (
+    <>
+    {
+      
+
+    
     <div className="flex h-screen bg-whitesmoke w-full">
       <div className="flex border-r-2 flex-col w-[20%] relative">
         <div className="logout hover:cursor-pointer absolute z-0 bottom-5 right-5">
@@ -12,7 +28,10 @@ const SideBar = () => {
             <CiLogout size="40" />
           </h2>
         </div>
-        <Link to="/admin/dashBoard" className="hover:cursor-pointer  h-16 flex items-center justify-center text-white sm:text-md lg:text-xl font-semibold bg-gray-dark">
+        <Link
+          to="/admin/dashBoard"
+          className="hover:cursor-pointer  h-16 flex items-center justify-center text-white sm:text-md lg:text-xl font-semibold bg-gray-dark"
+        >
           EduBlink
         </Link>
         <div className="flex flex-col flex-1 font-enriq text-2xl">
@@ -203,6 +222,10 @@ const SideBar = () => {
         </div>
       </div>
     </div>
+    
+
+}
+    </>
   );
 };
 
