@@ -17,6 +17,8 @@ app.use(cors({
     credentials:true
 }))
 
+app.use(express.static("public"))
+
 
 //admin Routes
 app.use("/admin",adminRoute)

@@ -5,6 +5,9 @@ import CourseShopPage from "./pages/CourseShopPage";
 import CartDetailsPage from "./pages/CartDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminHomePage from "./pages/AdminHomePage";
+
+
 export {
     AdminLoginPage,
     ApplicationSecurityServices,
@@ -12,5 +15,6 @@ export {
     BookShopPage,
     CourseShopPage,
     CartDetailsPage,
-    LoginPage
+    LoginPage,
+    AdminHomePage
 }

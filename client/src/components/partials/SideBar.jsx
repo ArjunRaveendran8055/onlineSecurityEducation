@@ -1,7 +1,7 @@
 import React from "react";
 import { CiLogout } from "react-icons/ci";
 import { HiOutlineHomeModern } from "react-icons/hi2";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const SideBar = () => {
   return (
@@ -12,9 +12,9 @@ const SideBar = () => {
             <CiLogout size="40" />
           </h2>
         </div>
-        <div className="h-16 flex items-center justify-center text-white sm:text-md lg:text-xl font-semibold bg-gray-dark">
+        <Link to="/admin/dashBoard" className="hover:cursor-pointer  h-16 flex items-center justify-center text-white sm:text-md lg:text-xl font-semibold bg-gray-dark">
           EduBlink
-        </div>
+        </Link>
         <div className="flex flex-col flex-1 font-enriq text-2xl">
           <div className="group ">
             <a
@@ -28,7 +28,7 @@ const SideBar = () => {
             </a>
           </div>
 
-          <div className="group relative">
+          <div className="group ">
             <a
               href="#"
               className="py-2 px-4 text-gray-300 focus:bg-gray flex items-center justify-between"
@@ -46,7 +46,7 @@ const SideBar = () => {
                 />
               </svg>
             </a>
-            <div className="hidden group-hover:flex flex-col pl-10 border-y-2 absolute">
+            <div className="hidden group-hover:flex flex-col pl-10 border-y-2 ">
               <a
                 href="#"
                 className="block text-gray-300 hover:bg-gray-700 py-1 border-b-2"

@@ -1,34 +1,38 @@
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../Styles/Styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToastView } from "../features/toast/toastSlice";
 import axios from "axios";
 
 const AdminLogin = () => {
   const dispatch = useDispatch();
+  const navigate=useNavigate()
   const [visible, setVisible] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
-  // console.log(user,"email and password")
+  
 
+  // console.log(user,"email and password")
   const handleLoginSubmit = async () => {
-    if(user.email.length===0 || user.password.length===0 ){
-      return dispatch(setToastView({type:"error",msg:"Enter Complete Credentials"}))
+    if (user.email.length === 0 || user.password.length === 0) {
+      return dispatch(
+        setToastView({ type: "error", msg: "Enter Complete Credentials" })
+      );
     }
     await axios
       .post("/admin/login", { email: user.email, password: user.password })
       .then((res) => {
-        //console.log(res);
-        const {message}=res.data.data
-        
+        const { message } = res.data;
+        //setting success message to the taostContainer
+        navigate("/admin/dashBoard")
+        dispatch(setToastView({type:"success",msg:message}))
       })
       .catch((err) => {
-
         //fetching server error msg from the response
         const { error } = err.response.data;
 
