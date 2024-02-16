@@ -8,7 +8,7 @@ const jwtSign=(obj)=>{
 const jwtVerify= (token)=>{
     try {
         const user= jwt.verify(token,process.env.JWT_SECRET)
-        console.log(user)
+        //console.log(user)
         return user;
     } catch (error) {
         return false

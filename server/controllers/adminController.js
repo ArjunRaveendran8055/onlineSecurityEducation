@@ -24,7 +24,6 @@ const LoginController= asyncWrapper(
          if(!same){
             throw new AppError("Enter Matching Credentials.",400)
          }
-
          const token=jwtSign({id:result._id,email:result.email,username:result.username,role:result.role})
 
          let expDate= new Date(Date.now()+3600000*12)
@@ -38,14 +37,47 @@ const LoginController= asyncWrapper(
 const verifyAdminController=asyncWrapper(
   async (req,res,next)=>{
     const cookie=req.headers.cookie;
+    //no Cookie found
+    if(!cookie){
+       throw new AppError("Athenticate User.",400)
+    }
+    console.log("cookieHeader is:",cookie);
     const token=cookie.split("=")[1]
     const user=jwtVerify(token)
     
+    //not a Valid token
     if(!user){
-      console.log("hai mammu",user);
       throw new AppError("Your Token Has Expired.",400)
     }
+
+
+    //responding userData back
+    return res.status(200).json({data:user,success:true})
   }
 )
 
-module.exports={LoginController,verifyAdminController}
+const refreshTokenAdminconTroller=asyncWrapper(
+  async(req,res,next)=>{
+    console.log("dumDum");
+    const cookie=req.headers.cookie;
+
+    //no Cookie found
+    if(!cookie){
+       throw new AppError("Athenticate User.",400)
+    }
+    //console.log("cookieHeader is:",cookie);
+    const oldToken=cookie.split("=")[1]
+    const user=jwtVerify(oldToken)
+    
+    //not a Valid token
+    if(!user){
+      throw new AppError("Your Token Has Expired.",400)
+    }
+    const  token=jwtSign({id:user.id,email:user.email,username:user.username,role:user.role})
+    console.log("token is ready for launch");
+    let expDate= new Date(Date.now()+3600000*12)
+         res.status(200).cookie("token",token,{expires: expDate,httpOnly:true,sameSite:"lax"}).json({data:user,success:true})
+  }
+)
+
+module.exports={LoginController,verifyAdminController,refreshTokenAdminconTroller}

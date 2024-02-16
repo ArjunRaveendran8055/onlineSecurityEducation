@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 
 const AdminHomePage = () => {
 
-  const {errorMsg}=useSelector(state=> state.user)
-  console.log("err from adminPage is",errorMsg)
+  // const {errorMsg}=useSelector(state=> state.user)
+  // console.log("err from adminPage is",errorMsg)
   return (
     <>
     
