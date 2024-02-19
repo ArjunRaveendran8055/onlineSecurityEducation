@@ -5,7 +5,7 @@ const { errorHandler } = require("./middleware/errorHandler");
 const { bookRoute } = require("./routes/bookRoute");
 const { courseRoute } = require("./routes/courseRoute");
 const morgan = require("morgan");
-const { adminRoute } = require("./routes/adminRoute");
+const { authRoute } = require("./routes/authRoute");
 
 const app=express();
 
@@ -19,10 +19,8 @@ app.use(cors({
 
 app.use(express.static("public"))
 
-
 //admin Routes
-app.use("/admin",adminRoute)
-
+app.use("/authenticate",authRoute)
 
 //Book Routes
 app.use("/books",bookRoute)

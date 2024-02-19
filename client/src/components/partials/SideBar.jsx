@@ -6,28 +6,25 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { setToastView } from "../features/toast/toastSlice";
 import axios from "axios";
 import { getUserData } from "../features/users/userSlice";
+
+
 const SideBar = () => {
   const { noOfUsers, isLoggedIn, userData } = useSelector(
     (state) => state.user
   );
-
   const [loader, setLoader] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  console.log("USER IS : ", userData);
-  console.log("IS LOGGEDIN ?", isLoggedIn);
-
   let firstCheck = true;
 
   //authentication using initial token and storing verified userData to the reduxStore
   const tokenDecode = async () => {
     try {
-      const res = await axios.get("/admin/verifyAdmin");
+      const res = await axios.get("/authenticate/verify");
       console.log("res is: ", res.data.data);
       return res.data.data;
     } catch (error) {
-      console.log("error is: ", error.response.data.error);
+      console.log("error is: ", error.response);
       navigate("/admin");
       return dispatch(
         setToastView({ type: "error", msg: error.response.data.error })
@@ -36,12 +33,12 @@ const SideBar = () => {
   };
 
   //refreshing token in every 30 seconds
-
   const updateToken = async () => {
     try {
-      const res = await axios.get("/admin/refreshToken");
+      const res = await axios.get("/authenticate/refreshToken");
       setLoader(false);
       console.log("token update res is: ", res);
+      return res.data.data
     } catch (error) {
       console.log("error in refresh token is: ", error.response.data.error);
     }
@@ -52,13 +49,14 @@ const SideBar = () => {
     if (firstCheck) {
       firstCheck = false;
       tokenDecode().then((user) => {
-        console.log(user.username);
         dispatch(getUserData(user));
         return setLoader(false);
       });
       const interval = setInterval(() => {
-        updateToken()
-        console.log("dum Dum");
+        updateToken().then((user)=>{
+          console.log("Refresed UserName",user.username)
+          dispatch(getUserData(user))
+        })
       }, 1000 * 29);
 
       return () => {

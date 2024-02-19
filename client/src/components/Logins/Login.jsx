@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { setToastView } from "../features/toast/toastSlice";
 import axios from "axios";
 
-const AdminLogin = () => {
+const Login = () => {
   const dispatch = useDispatch();
   const navigate=useNavigate()
   const [visible, setVisible] = useState(false);
@@ -14,8 +14,6 @@ const AdminLogin = () => {
     email: "",
     password: "",
   });
-
-  
 
   // console.log(user,"email and password")
   const handleLoginSubmit = async () => {
@@ -25,12 +23,17 @@ const AdminLogin = () => {
       );
     }
     await axios
-      .post("/admin/login", { email: user.email, password: user.password })
+      .post("/authenticate/login", { email: user.email, password: user.password,Credential:true })
       .then((res) => {
-        const { message } = res.data;
+        const { message,data } = res.data;
+        //directing towards dashboard according to the type of user.
+        if(data.role==="admin"){
+          navigate("/admin/dashBoard")
+        }else{
+          navigate("/")
+        }
         //setting success message to the taostContainer
-        navigate("/admin/dashBoard")
-        dispatch(setToastView({type:"success",msg:message}))
+        return dispatch(setToastView({type:"success",msg:message}))
       })
       .catch((err) => {
         //fetching server error msg from the response
@@ -144,4 +147,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default Login;
