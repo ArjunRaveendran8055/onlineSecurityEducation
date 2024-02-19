@@ -17,6 +17,7 @@ import SelectedBookDetails from "../components/features/book/SelectedBookDetails
 import axios from "axios";
 import ToastContainer from "../components/features/toast/ToastContainer";
 import SideBar from "../components/partials/SideBar";
+import SignUpPage from "../pages/SignUpPage";
 
 axios.defaults.baseURL = "http://localhost:8055";
 axios.defaults.withCredentials = true;
@@ -27,6 +28,7 @@ const App = () => {
       <ToastContainer />
       <Routes>
         <Route path="/users/login" element={<AdminLoginPage />} />
+        <Route path="/users/signUp" element={<SignUpPage/>} />
         <Route path="" element={<NavBar open={open} setOpen={setOpen} />}>
           <Route path="/" element={<Home />} />
           <Route path="/allCourses" element={<CourseShopPage open={open} />} />
