@@ -20,13 +20,25 @@ const ToastContainer = () => {
   z-50 flex justify-center items-center
   `}
     >
-      <div className="toast-container bg-white px-32 border-[1px] shadow-xl rounded-md flex flex-col items-center">
-        <div className="uppercase mt-[2px] font-enriq text-xs text-red">
+      <div className="toast-container bg-white sm:px-2 md:px-3 lg:px-32 border-[1px] shadow-xl rounded-md flex flex-col items-center">
+        <div
+          className={`uppercase mt-[2px] font-enriq text-xs ${
+            type === "success" ? "text-green" : " text-crimson"
+          }`}
+        >
           ! {type}_MSG !
         </div>
-        <div className="pt-10 pb-5 font-Playfiar sm:text-xl md:text-2xl text-orange flex flex-row justify-center items-center">
+        <div
+          className={`pt-10 pb-5 font-Playfiar sm:text-md md:text-2xl flex flex-row justify-center items-center ${
+            type === "success" ? "text-green" : " text-orange"
+          }`}
+        >
           {msg}
-          {type === "success" ? <FcApproval className="ml-2" size={30} /> :<FcHighPriority className="ml-2" size={30}/>}
+          {type === "success" ? (
+            <FcApproval className="ml-2" size={30} />
+          ) : (
+            <FcHighPriority className="ml-2" size={30} />
+          )}
         </div>
         <div>
           <button

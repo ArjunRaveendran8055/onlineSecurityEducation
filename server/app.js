@@ -6,9 +6,9 @@ const { bookRoute } = require("./routes/bookRoute");
 const { courseRoute } = require("./routes/courseRoute");
 const morgan = require("morgan");
 const { authRoute } = require("./routes/authRoute");
+const { signUpRoute } = require("./routes/signUpRoute");
 
 const app=express();
-
 
 app.use(express.json())
 
@@ -19,7 +19,10 @@ app.use(cors({
 
 app.use(express.static("public"))
 
-//admin Routes
+//new user signUp route
+app.use("/signUp",signUpRoute)
+
+//auth/login Routes
 app.use("/authenticate",authRoute)
 
 //Book Routes
@@ -34,11 +37,7 @@ app.use(morgan("dev"))
 
 
 
-
 app.use(errorHandler)
-
-
-
 
 
 module.exports={app}

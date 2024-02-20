@@ -6,6 +6,8 @@ import CartDetailsPage from "./pages/CartDetailsPage";
 import LoginPage from "./pages/LoginPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminHomePage from "./pages/AdminHomePage";
+import ActivationPage from "./pages/ActivationPage";
+
 
 
 export {
@@ -16,5 +18,6 @@ export {
     CourseShopPage,
     CartDetailsPage,
     LoginPage,
-    AdminHomePage
+    AdminHomePage,
+    ActivationPage
 }

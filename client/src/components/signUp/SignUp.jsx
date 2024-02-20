@@ -15,6 +15,7 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [visible, setVisible] = useState(false);
   const [avatar, setAvatar] = useState();
+  const [loader, setLoader] = useState(false);
 
   //file submit handler
   const handleSubmit = () => {
@@ -45,19 +46,34 @@ const SignUp = () => {
     formData.append("email", email);
     formData.append("password", password);
 
+    //setting Up Loader
+    setLoader(true);
+
     //api to create a user
     axios
       .post("/signUp/createUser", formData, config)
       .then((res) => {
-        console.log(res);
+        //console.log(res.data.message);
+        setEmail("");
+        setPassword("")
+        setName("")
+        setAvatar(null)
+        const { message } = res.data;
+        setLoader(false)
+        return dispatch(setToastView({ type: "success", msg: message }));
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(err.response.data);
+        const { error } = err.response.data;
+        setLoader(false)
+        return dispatch(setToastView({ type: "error", msg: error }));
+        
       });
   };
 
   return (
-    <div className=" min-h-screen bg-gray-50  flex flex-col justify-center py-12 sm:px-6 lg:px-8 ">
+    <div className="min-h-screen bg-gray-50  flex flex-col justify-center py-12 sm:px-6 lg:px-8 ">
+      
       <div className=" sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl  font-bold  text-gray-900-">
           SignUp as a New User
@@ -149,13 +165,13 @@ const SignUp = () => {
                 className=" block text-sm font-medium text-gray-700"
               ></label>
               <div className=" mt-2 flex items-center">
-                <span className=" inline-block h-8 w-8 rounded-full overflow-hidden">
+                <span className=" inline-block h-8 w-8 rounded-full overflow-hidden ">
                   {avatar ? (
                     <img
                       alt="avatar"
                       id="avatar"
                       src={URL.createObjectURL(avatar)}
-                      className=" h-full w-full object-cover rounded-full"
+                      className="h-7 w-8 object-cover rounded-full"
                     />
                   ) : (
                     <RxAvatar id="avatar" className="h-8 w-8" />
@@ -179,12 +195,25 @@ const SignUp = () => {
               </div>
             </div>
 
-            <button
-              onClick={handleSubmit}
+            {
+              loader ?
+              <button
+              
               className="group relative w-full h-10 flex justify-center py-2 px-4 border border-transparent text-white text-sm font-medium rounded-md bg-blue hover:bg-blue-700"
             >
-              Submit
+              Please be Patient...
             </button>
+            :
+            <button
+            onClick={handleSubmit}
+            className="group relative w-full h-10 flex justify-center py-2 px-4 border border-transparent text-white text-sm font-medium rounded-md bg-blue hover:bg-blue-700"
+          >
+            Submit
+          </button>
+
+            }
+
+            
             <div className={`${styles.normalFlex} w-full`}>
               <h4>Already have an account</h4>
               <Link to={"/login"} className="text-blue-600 pl-2">

@@ -5,6 +5,7 @@ import SelectedCourseDetails from "../components/features/course/SelectedCourseD
 import Home from "../pages/Home/Home";
 import BlogsView from "../components/features/blog/BlogsView";
 import {
+  ActivationPage,
   AdminHomePage,
   AdminLoginPage,
   ApplicationSecurityServices,
@@ -28,7 +29,8 @@ const App = () => {
       <ToastContainer />
       <Routes>
         <Route path="/users/login" element={<AdminLoginPage />} />
-        <Route path="/users/signUp" element={<SignUpPage/>} />
+        <Route path="/users/signUp" element={<SignUpPage />} />
+        <Route path="/activation/:activationToken" element={<ActivationPage/>}/>
         <Route path="" element={<NavBar open={open} setOpen={setOpen} />}>
           <Route path="/" element={<Home />} />
           <Route path="/allCourses" element={<CourseShopPage open={open} />} />

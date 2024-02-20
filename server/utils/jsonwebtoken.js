@@ -15,4 +15,18 @@ const jwtVerify= (token)=>{
     }
 }
 
-module.exports={jwtSign,jwtVerify}
+const jwtUserActivation=(obj)=>{
+    return jwt.sign(obj,process.env.ACTIVATION_SECRET,{expiresIn:'1hr'})
+}
+
+
+const jwtUserActivationVerify=(token)=>{
+    try {
+        const user=jwt.verify(token,process.env.ACTIVATION_SECRET)
+        return user
+    } catch (error) {
+        return false
+    }
+}
+
+module.exports={jwtSign,jwtVerify,jwtUserActivation,jwtUserActivationVerify}

@@ -42,7 +42,11 @@ const userSchema= new mongoose.Schema({
         type:String,
         required:[true,"role is required"]
     },
-
+    cartItems:Array,
+    active:{
+      type:Boolean,
+      default:false
+    },
     avatar:{
         type:String,
         required:false
